@@ -13,7 +13,12 @@ import CoreLocation
 class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate {
     
     func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
-        print(latitude, longitude)
+        //print(latitude, longitude)
+        let annotation = MKPointAnnotation()
+        let locationCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: CLLocationDegrees(longitude))
+        annotation.coordinate = locationCoordinate
+        annotation.title = "\(latitude)"
+        mapView.addAnnotation(annotation)
     }
 
 
@@ -30,12 +35,12 @@ class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate
         
         // One degree of latitude is approximately 111 kilometers (69 miles) at all times.
         // San Francisco Lat, Long = latitude: 37.783333, longitude: -122.416667
-        let mapCenter = CLLocationCoordinate2D(latitude: 37.783333, longitude: -122.416667)
-        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let mapCenter = CLLocationCoordinate2D(latitude: 37.779560, longitude:-122.393027)
+        let mapSpan = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
         let region = MKCoordinateRegion(center: mapCenter, span: mapSpan)
         // Set animated property to true to animate the transition to the region
         mapView.setRegion(region, animated: false)
-        addPin()
+        
 
         // Do any additional setup after loading the view.
     }
