@@ -10,7 +10,12 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate {
+    
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+        print(latitude, longitude)
+    }
+
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -54,10 +59,13 @@ class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate
         let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
         let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
+        pickedImage = originalImage
+        
         // Do something with the images (based on your use case)
         
         // Dismiss UIImagePickerController to go back to your original view controller
         dismiss(animated: true, completion: nil)
+          performSegue(withIdentifier: "tagSegue", sender: self)
     }
     
     
@@ -84,14 +92,16 @@ class PhotoMapViewController: UIViewController,  UIImagePickerControllerDelegate
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let locationsViewController = segue.destination as! LocationsViewController
+        locationsViewController.delegate = self
     }
-    */
+    
 
 }
